@@ -1,6 +1,7 @@
-const {schema, model } = require('mongoose');
+const {Schema, model } = require('mongoose');
+const reactionSchema = require('./Reactions');
 
-const postSchema = new schema(
+const postSchema = new Schema(
    {
       title: {type: String, required: true},
       postSnippet: {type: String, required: true},
@@ -8,11 +9,15 @@ const postSchema = new schema(
       downVotes: {type: Number, required: true}, 
       language: {type: String, required: true},
       createdAt: {type: Date, default: Date.now, get: (timestamp) => dateFormat(timestamp)},
-      userName
+      userName: {
+        type: String, 
+        required: true
+      },
+      reactions: [reactionSchema]
    }
 );  
 
 
 const Post = model('Post', postSchema);
 
-modules.exports = Post;
+module.exports = Post;

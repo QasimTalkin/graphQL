@@ -33,6 +33,17 @@ db.once('open', async () => {
 
   await Posts.collection.insertMany(createdPosts);
 
+  // create followers for users 
+  for (let i =0; i < 100; i++) {
+    const { _id: userId } = createdUsers.ops[Math.floor(Math.random() * createdUsers.ops.length)];
+    let followerID = userId; 
+    while (followerID === userId) {
+      followerID = createdUsers.ops[Math.floor(Math.random() * createdUsers.ops.length)]._id;
+    }
+    await Users.updateOne( { _id: userId }, { $addToSet: { following: followerID } } );
+  }  
+
+
   console.log('all done!');
   process.exit(0);
   
