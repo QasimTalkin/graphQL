@@ -106,3 +106,30 @@ const resolvers = {
   },
 };
 ```
+
+## Query type
+* `type Query { }` - The Query type is where we define the logic for fetching data.
+* `type NameOfTypeOfData { }` - The name of the type is the name of the query we're defining, and the properties of the type are the fields we want to return.
+```js
+const typeDefs = gql`
+  type Query {
+    users: [User]
+    books: [Book]
+  }
+  type User {
+    _id: ID
+    username: String
+    email: String
+    bookCount: Int
+    savedBooks: [Book]
+  }
+  type Book {
+    bookId: ID
+    authors: [String]
+    description: String!
+    title: String
+    image: String
+    link: String
+  }
+`;
+```
