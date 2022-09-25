@@ -26,11 +26,12 @@ const resolvers = {
     },
     
     posts: async () => {
-      let result = await Posts.find()
-                    .populate('reactions')
+      let result = await Posts.find();
+      
+      return result
     },
     post: async (parent, { id, userName }) => {
-      let params = id ? { _id: id } : userName ? { userName } : null
+      let params = id ? { _id: id } :  null
       return Posts.findOne(params).populate('reactions');
     }
   }
