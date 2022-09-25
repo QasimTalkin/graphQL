@@ -19,19 +19,35 @@ db.once('open', async () => {
   }
 
   const createdUsers = await Users.collection.insertMany(userData);
-    console.log(createdUsers);
   // create posts
   let createdPosts = [];
   for (let i = 0; i < 100; i++) {
-    const title = faker.lorem.words(Math.round(Math.random() * 20) + 1);
-    const postText = faker.lorem.words(Math.round(Math.random() * 20) + 1);
+    const title = faker.lorem.words(Math.round(Math.random() * 6) + 1);
+    const postSnippet = faker.lorem.words(Math.round(Math.random() * 25) + 1);
+    const upVotes = Math.floor(Math.random() * 100) + 1;
+    const downVotes = Math.floor(Math.random() * 20) + 1;
     const userName = createdUsers.ops[Math.floor(Math.random() * createdUsers.ops.length)].userName;
-    const language = faker.lorem.words(Math.round(Math.random() * 20) + 1);
-    
-    createdPosts.push({ title, postText, userName });
+    const language = faker.lorem.words(Math.round(Math.random() * 5) + 1);
+    const reactions = [];
+    for (index of [...Array(Math.floor(Math.random() * 10) + 1)]) {
+        reactions.push({
+        userName: createdUsers.ops[Math.floor(Math.random() * createdUsers.ops.length)].userName, 
+        reactionBody: faker.lorem.words(Math.round(Math.random() * 5) + 1)
+      });
+    }
+    createdPosts.push({ title, postSnippet, userName, upVotes, downVotes, language, reactions });
   }
-
-  await Posts.collection.insertMany(createdPosts);
+  let post = await Posts.collection.insertMany(createdPosts);
+  // connect posts to users
+  for (let i = 0; i < 100; i++) {
+    const randomUser = createdUsers.ops[Math.floor(Math.random() * createdUsers.ops.length)];
+    // get post from that user
+    const postByRandomUser = post.ops.filter(post => post.userName === randomUser.userName);
+    await Users.findOneAndUpdate(
+      { userName: randomUser.userName },
+      { $addToSet: { posts: postByRandomUser } }
+    );
+  }
 
   // create followers for users 
   for (let i =0; i < 100; i++) {
