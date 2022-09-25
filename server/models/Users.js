@@ -37,7 +37,7 @@ userSchema.pre('save', async function(next) {
 });
 
 userSchema.virtual('friendCount').get(function() {
-  return this.friends.length;
+  return this.following.length;
 });
 
 const User = model('User', userSchema);
