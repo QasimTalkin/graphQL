@@ -1,17 +1,13 @@
-const { User } = require('../models');
+const { Users } = require('../models');
+const { AuthenticationError } = require('apollo-server-express');
+const { Reactions } = require('../models');
+
 
 const resolvers = {
   Query: {
-    userName: () => 'John Doe',
-    users: async () => { 
-      const users = await User.find();
-      return users;
-    }
-  },
-  Mutation: {
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      return user;
+    sayHello: () => 'Hello World!',
+    user: async () => {
+      return Users.find();
     }
   }
 }

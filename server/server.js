@@ -18,12 +18,27 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.get('/', 
-  (re, res) => { res.redirect('http://localhost:'+PORT) }
+  (re, res) => { res.redirect('http://localhost:'+3000) }
 );
 
 // open connection to mongo db, once successful start server
-db.once('open', () => {
-  app.listen(PORT, () => {
-    console.log(`Server is running on PORT: ${PORT}`);
+// db.once('open', () => {
+//   app.listen(PORT, () => {
+//     console.log(`Server is running on PORT: ${PORT}`);
+//   });
+// });
+
+
+const startApolloServer = async (typeDefs, resolvers) => {
+  await server.start();
+  server.applyMiddleware({ app });
+  
+  db.once('open', () => {
+    app.listen(PORT, () => {
+      console.log(`Server is running on PORT: ${PORT}`);
+    });
   });
-});
+  console.log(`Server is running on PORT: ${server.graphqlPath}`);
+}
+
+startApolloServer(typeDefs, resolvers);

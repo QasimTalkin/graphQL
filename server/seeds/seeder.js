@@ -11,24 +11,24 @@ db.once('open', async () => {
   // create user data
   const userData = [];
   for (let i = 0; i < 20; i++) {
-    const username = faker.internet.userName();
-    const email = faker.internet.email(username);
+    const userName = faker.internet.userName();
+    const email = faker.internet.email(userName);
     const password = faker.internet.password();
 
-    userData.push({ username, email, password });
+    userData.push({ userName, email, password });
   }
 
   const createdUsers = await Users.collection.insertMany(userData);
-
+    console.log(createdUsers);
   // create posts
   let createdPosts = [];
   for (let i = 0; i < 100; i++) {
     const title = faker.lorem.words(Math.round(Math.random() * 20) + 1);
     const postText = faker.lorem.words(Math.round(Math.random() * 20) + 1);
-    const username = createdUsers.ops[Math.floor(Math.random() * createdUsers.ops.length)].username;
+    const userName = createdUsers.ops[Math.floor(Math.random() * createdUsers.ops.length)].userName;
     const language = faker.lorem.words(Math.round(Math.random() * 20) + 1);
     
-    createdPosts.push({ title, postText, username });
+    createdPosts.push({ title, postText, userName });
   }
 
   await Posts.collection.insertMany(createdPosts);
@@ -42,6 +42,10 @@ db.once('open', async () => {
     }
     await Users.updateOne( { _id: userId }, { $addToSet: { following: followerID } } );
   }  
+
+// add reactions to the posts
+  
+
 
 
   console.log('all done!');
