@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const userSchema  = new Schema (
   {
     userName: {type: String, required: true, unique: true, trim: true},
-    firstName: {type: String, required: true},
-    lastName: {type: String, required: true},
+    firstName: String,
+    lastName: String,
     email: {type: String, required: true, unique: true, match: [/.+@.+\..+/, 'Must use a valid email address']},
     password: {type: String, required: true, minlength: 3},
     posts: [{

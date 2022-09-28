@@ -34,6 +34,31 @@ const resolvers = {
       let params = id ? { _id: id } :  null
       return Posts.findOne(params).populate('reactions');
     }
+  },
+  
+  Mutation: {
+    createUser: async (parent, args) => {
+      const createdUser = await Users.create(args);
+      // const token = createdUser.signToken();
+      return createdUser 
+    },
+    
+    login: async (parent, { email, password }) => {
+      const user = await Users.findOne({ email });
+      if (!user) {
+        throw new AuthenticationError('Incorrect Credentials');
+      }
+      
+      const correctPw = await user.isCorrectPassword(password);
+      
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect Credentials');
+      }
+      
+      return user;
+    }
   }
 }
+
+
 module.exports = resolvers;
