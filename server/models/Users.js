@@ -41,8 +41,6 @@ userSchema.virtual('friendCount').get(function() {
 });
 
 userSchema.methods.isCorrectPassword = async function(password) {
-  console.log('password', password);
-  console.log('this.password', this.password);
   
   return bcrypt.compare(password, this.password);
 }

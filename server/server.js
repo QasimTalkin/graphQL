@@ -4,10 +4,12 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./gql');
 const db = require('./config/connection');
 const PORT = process.env.PORT || 4014;
+const { authMiddleware } = require('./utils/auth');
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: authMiddleware
 });
 
 
@@ -16,6 +18,7 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 
 app.get('/', 
   (re, res) => { res.redirect('http://localhost:'+3000) }
