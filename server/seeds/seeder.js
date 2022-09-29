@@ -60,9 +60,6 @@ db.once('open', async () => {
   }  
 
 // add reactions to the posts
-  
-
-
 
   console.log('all done!');
   process.exit(0);

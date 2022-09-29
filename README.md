@@ -133,3 +133,92 @@ const typeDefs = gql`
   }
 `;
 ```
+## Create and login user JWT
+* To perform any data manipulations we use mutations.
+* `type Mutation { }` - The Mutation type is where we define the logic for modifying data.
+```js
+// typeDefs.js
+const typeDefs = gql`
+  // type Query { }
+  type Mutation {
+    createUser(username: String!, email: String!, password: String!): User
+    login(email: String!, password: String!): User
+  }
+```
+
+## mutation resolvers
+* `createUser` - The createUser mutation is where we define the logic for creating a new user.
+* `login` - The login mutation is where we define the logic for logging in a user.
+```js
+// resolvers.js
+const resolvers = {
+  // Query: { }
+  Mutation: {
+    createUser: async (parent, args) => {
+      const user = await User.create(args);
+
+      return { user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      const correctPw = await user.isCorrectPassword(password);
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+      return { user };
+    },
+  },
+};
+```
+
+## authentication - JWT
+* The JWT is a token that's created when a user logs in and is sent back to the client.
+  * all data is stored in a single string called a token.
+  * no need to save session data on the server.
+  * less use of server memory.
+  * can be used anywhere, not just in a browser.
+* `npm i jsonwebtoken` - The jsonwebtoken package is used to create and verify JSON web tokens.
+
+## Sign a token
+* `signToken` - The signToken function is used to sign a token.
+* `secret` - The secret is a string that's used to sign the token.
+* `expiresIn` - The expiresIn property is used to set the expiration time for the token.
+```js
+const jwt = require('jsonwebtoken');
+const signToken = (user) => {
+  return jwt.sign({ data: user }, secret, { expiresIn: '1h' });
+};
+```
+
+## Verify a token
+* `verifyToken` - The verifyToken function is used to verify a token.
+* `secret` - The secret is a string that's used to verify the token.
+```js
+const jwt = require('jsonwebtoken');
+const verifyToken = (token) => {
+  return jwt.verify(token, secret, (err, decodedData) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    return decodedData;
+  });
+};
+```
+## Auth typeDefs
+* `auth` - The auth type is where we define the structure of the data we're returning from the login mutation.
+```js
+const typeDefs = gql`
+  type Auth {
+    token: ID!
+    user: User
+  }
+
+  type Mutation {
+    login(email: String!, password: String!): Auth
+  }
+`;
+```

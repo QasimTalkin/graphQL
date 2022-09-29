@@ -12,14 +12,12 @@ const typeDefs = gql`
     following: [User]
     friendCount: Int
     }
-  
   type Reaction {
     _id: ID
     reactionBody: String
     userName: String
     createdAt: String
   }
-  
   type Post {
     _id: ID
     title: String
@@ -29,6 +27,7 @@ const typeDefs = gql`
     userName: String
     reactions: [Reaction]
   }
+  
   type Query {
     users: [User]
     user(id:ID, userName: String): User
@@ -36,6 +35,21 @@ const typeDefs = gql`
     posts: [Post]
     post(id: ID!): Post
     userPosts(userName: String): [Post]
+  }
+  
+  type Auth {
+    token: ID!
+    user: User
+  }  
+  type Mutation{
+    createUser(userName:String!, email:String!, password:String!): Auth
+    updateUser(userName:String!, email:String, password:String): Auth
+    deleteUser(userName:String!, password:String): Auth
+    
+    addPost(title:String!, postSnippet:String!, language:String!): Post
+    addReaction(postId:ID!, reactionBody:String!): Post
+    followUser(userName:String!): User
+    login(email:String!, password:String!): Auth
   }
 `;
 

@@ -5,8 +5,8 @@ const bcrypt = require('bcrypt');
 const userSchema  = new Schema (
   {
     userName: {type: String, required: true, unique: true, trim: true},
-    firstName: {type: String, required: true},
-    lastName: {type: String, required: true},
+    firstName: String,
+    lastName: String,
     email: {type: String, required: true, unique: true, match: [/.+@.+\..+/, 'Must use a valid email address']},
     password: {type: String, required: true, minlength: 3},
     posts: [{
@@ -39,6 +39,11 @@ userSchema.pre('save', async function(next) {
 userSchema.virtual('friendCount').get(function() {
   return this.following.length;
 });
+
+userSchema.methods.isCorrectPassword = async function(password) {
+  
+  return bcrypt.compare(password, this.password);
+}
 
 const User = model('User', userSchema);
 

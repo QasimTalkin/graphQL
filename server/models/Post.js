@@ -5,8 +5,8 @@ const postSchema = new Schema(
    {
       title: {type: String, required: true},
       postSnippet: {type: String, required: true},
-      upVotes: {type: Number, required: true},
-      downVotes: {type: Number, required: true}, 
+      upVotes: {type: Number},
+      downVotes: {type: Number}, 
       language: {type: String, required: true},
       createdAt: {type: Date, default: Date.now, get: (timestamp) => dateFormat(timestamp)},
       userName: {
