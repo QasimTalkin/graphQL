@@ -40,6 +40,13 @@ userSchema.virtual('friendCount').get(function() {
   return this.following.length;
 });
 
+userSchema.methods.isCorrectPassword = async function(password) {
+  console.log('password', password);
+  console.log('this.password', this.password);
+  
+  return bcrypt.compare(password, this.password);
+}
+
 const User = model('User', userSchema);
 
 module.exports  = User;
