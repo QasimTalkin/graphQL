@@ -3,3 +3,17 @@
 @tailwind components;
 
 @tailwind utilities;
+
+
+/* matrix rain font color for forms input */
+
+.matrix {
+  color: #00ff00;
+  font-family: 'Matrix Code NFI', monospace;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}

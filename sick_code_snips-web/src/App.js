@@ -1,33 +1,28 @@
 import React from 'react';
+import Footer from './components/footer';
+import Main from './components/main';
+import Header from './components/header';
+import { ApolloProvider, ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
+
+
+const client = new ApolloClient({
+  link: createHttpLink({
+    uri: 'http://localhost:4014/graphql',
+  }),
+  cache: new InMemoryCache()
+});
+
 
 function App() {
   return (
-    <div className="flex flex-col h-full items-center justify-center bg-gray-200 text-gray-700">
-      <div className="flex items-center">
-        <h1 className="text-6xl font-thin tracking-wider">Create React App + Tailwind CSS</h1>
-      </div>
-      <p className="my-6 tracking-wide">
-        Edit <code>src/App.js</code> and save to reload.
-      </p>
-      <div className="mt-6 flex justify-center">
-        <a
-          className="uppercase hover:underline"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <a
-          className="ml-10 uppercase hover:underline"
-          href="https://tailwindcss.com"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn Tailwind
-        </a>
-      </div>
-    </div>
+    // background dark mode
+    <ApolloProvider client={client}>
+      <div className="bg-gray-900 text-white">
+      <Header />
+      <Main />
+      <Footer />
+        </div>
+    </ApolloProvider>
   );
 }
 

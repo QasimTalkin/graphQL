@@ -222,3 +222,33 @@ const typeDefs = gql`
   }
 `;
 ```
+## Client Side GQL Queries
+* Install appollo client
+  * `npm i @apollo/client graphql`
+
+## Apollo Client Provider
+* `ApolloProvider` - The ApolloProvider component is a wrapper component that we use to pass the Apollo Client instance to the React application.
+  * `ApolloProvider` - react component to provide data to the rest of the app.
+  * `ApolloClient` - the client that will be used to make requests to the server.
+  * `InMemoryCache` - the cache that will be used to store the data.
+  * `createHttpLink` - allows us control over the HTTP request that's made to the server, like a middleware.
+
+## Apollo provide snippet
+```js
+import { ApolloClient, InMemoryCache, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
+ 
+const client = new ApolloClient({
+  link: createHttpLink({
+    uri: 'http://localhost:4014/graphql',
+  }),
+  cache: new InMemoryCache(),
+});
+ 
+ReactDOM.render(
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+  document.getElementById('root')
+);
+```
+we use the ApolloClient() constructor to instantiate the Apollo Client instance and create the connection to the API endpoint. 
