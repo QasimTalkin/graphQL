@@ -4,7 +4,7 @@ import UserPosts from './pageComps/userPosts';
 
 export default function Main() {
   return (
-    <div className="container flex flex-col content-center items-center m-auto justify-center">
+    <div className="container flex flex-col content-center items-center m-auto justify-center h-full">
       <CreatePost />
       <UserPosts />
     </div>

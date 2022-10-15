@@ -1,0 +1,26 @@
+{
+  "name": "mern-stack",
+  "version": "1.0.0",
+  "description": "--- marp: true theme: gaia style: |   section.lead h1 {   text-align: center;   }   section.middle li{   text-align: center;   } --- <!-- headingDivider: 2 --> <!-- theme: gaia class: lead --> # MERN Stack",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \" cd server && npm run watch \" \" cd sick_code_snips-web && npm start -Y\"",
+    "install": "cd server && npm i && cd ../sick_code_snips-web && npm i",
+    "seed": "cd server && npm run seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/QasimTalkin/MERN-STACK.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/QasimTalkin/MERN-STACK/issues"
+  },
+  "homepage": "https://github.com/QasimTalkin/MERN-STACK#readme",
+  "devDependencies": {
+    "concurrently": "^7.4.0"
+  }
+}
