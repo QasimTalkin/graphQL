@@ -25,6 +25,7 @@ const typeDefs = gql`
     upVotes: Int
     downVotes: Int
     userName: String
+    createdAt: String
     reactions: [Reaction]
   }
   

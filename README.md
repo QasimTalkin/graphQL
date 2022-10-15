@@ -251,4 +251,40 @@ ReactDOM.render(
   document.getElementById('root')
 );
 ```
-we use the ApolloClient() constructor to instantiate the Apollo Client instance and create the connection to the API endpoint. 
+## Making a GQL request
+* `useQuery` - The useQuery hook is used to make a request to the server.
+* `gql` - The gql tag function is used to parse the query string into a query document.
+```js
+import { gql, useQuery } from '@apollo/client';
+
+export const QUERY_POSTS = gql`
+  posts {
+    postSnippets
+    userName
+    upVotes
+    reactions {
+      userName
+      reactionBody
+    }
+  }
+`;
+```
+
+## useQuery snippet
+* arguments - `QUERY_POSTS` - the query document.
+* arguments - `variables` - the variables object.
+* arguments - `fetchPolicy` - the fetch policy.
+* arguments - `onCompleted` - the callback function that's executed when the request is completed.
+* arguments - `onError` - the callback function that's executed when the request errors out.
+```js
+const { loading, data, error } = useQuery(QUERY_POSTS, {
+  variables: { postId },
+  fetchPolicy: 'network-only',
+  onCompleted: (data) => {
+    console.log(data);
+  },
+  onError: (error) => {
+    console.log(error);
+  },
+});
+```

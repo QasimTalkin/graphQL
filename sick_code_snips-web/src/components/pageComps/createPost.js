@@ -3,7 +3,7 @@ import React from 'react';
 export default function CreatePost() {
   return (
     <>
-      <div className="container mx-auto flex flex-col items-center justify-center h-screen">
+      <div className="w-screen max-w-screen-lg">
         <div className="flex flex-col items-center w-full justify-center bg-gray-600 p-4 rounded-lg shadow-xl">
           <h1 className="text-4xl font-bold matrix">Create Post</h1>
           <form className="flex flex-col w-full">
